@@ -1,0 +1,18 @@
+load("@rules_varlink//varlink:defs.bzl", "rust_varlink_library", "varlink_library", "varlink_lint")
+
+varlink_library(
+    name = "ping_interface",
+    src = "org.example.ping.varlink",
+    visibility = ["//visibility:public"],
+)
+
+rust_varlink_library(
+    name = "ping_rust",
+    interface = ":ping_interface",
+    visibility = ["//visibility:public"],
+)
+
+varlink_lint(
+    name = "ping_lint",
+    interface = ":ping_interface",
+)

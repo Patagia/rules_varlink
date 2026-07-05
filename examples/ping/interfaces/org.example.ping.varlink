@@ -1,0 +1,3 @@
+interface org.example.ping
+
+method Ping(ping: string) -> (pong: string)

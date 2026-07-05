@@ -1,0 +1,38 @@
+load("@rules_rs//rs:rust_binary.bzl", "rust_binary")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+rust_binary(
+    name = "server",
+    srcs = ["src/server.rs"],
+    edition = "2021",
+    deps = [
+        "//interfaces:ping_rust",
+        "@rules_varlink//varlink/runtime/rust:varlink",
+    ],
+)
+
+rust_binary(
+    name = "client",
+    srcs = ["src/client.rs"],
+    edition = "2021",
+    deps = [
+        "//interfaces:ping_rust",
+        "@rules_varlink//varlink/runtime/rust:varlink",
+    ],
+)
+
+sh_test(
+    name = "ping_test",
+    srcs = ["ping_test.sh"],
+    data = [
+        ":client",
+        ":server",
+    ],
+)
+
+sh_test(
+    name = "generator_error_test",
+    srcs = ["generator_error_test.sh"],
+    args = ["$(rlocationpath @rules_varlink//varlink/toolchain/rust:varlink_rust_generator)"],
+    data = ["@rules_varlink//varlink/toolchain/rust:varlink_rust_generator"],
+)

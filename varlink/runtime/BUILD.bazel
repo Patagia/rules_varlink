@@ -1,0 +1,2 @@
+# Language-specific runtime subdirectories live here (e.g. rust/).
+# Reference the runtime directly: @rules_varlink//varlink/runtime/rust:varlink

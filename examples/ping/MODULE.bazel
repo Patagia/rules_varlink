@@ -1,0 +1,31 @@
+module(
+    name = "ping_example",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "rules_varlink", version = "0.0.1")
+local_path_override(
+    module_name = "rules_varlink",
+    path = "../..",
+)
+
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "rules_shell", version = "0.8.0")
+bazel_dep(name = "rules_rs", version = "0.0.102")
+bazel_dep(name = "llvm", version = "0.8.17")
+
+# Provision the pinned rules_rust archive that rules_rs toolchains resolve against.
+rules_rust = use_extension("@rules_rs//rs:rules_rust.bzl", "rules_rust")
+use_repo(rules_rust, "rules_rust")
+
+rust_toolchains = use_extension("@rules_rs//rs/toolchains:module_extension.bzl", "toolchains")
+rust_toolchains.toolchain(
+    edition = "2021",
+    version = "1.95.0",
+)
+use_repo(rust_toolchains, "default_rust_toolchains")
+
+register_toolchains(
+    "@default_rust_toolchains//:all",
+    "@llvm//toolchain:all",
+)

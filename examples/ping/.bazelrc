@@ -1,0 +1,4 @@
+common --enable_platform_specific_config
+common --experimental_isolated_extension_usages
+common:linux --host_platform=//platforms:local_gnu
+common:linux --@llvm//config:experimental_stub_libgcc_s=True

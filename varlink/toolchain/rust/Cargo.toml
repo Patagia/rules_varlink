@@ -1,0 +1,14 @@
+[package]
+name = "varlink-rust-generator"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "varlink-rust-generator"
+path = "main.rs"
+
+[dependencies]
+varlink_generator = { git = "https://github.com/varlink/rust", rev = "2041093de7d883b6354087aa39fc4ec9d70a6944" }
+getopts = "0.2"
+prettyplease = "0.2"
+syn = { version = "2", features = ["full"] }

@@ -1,0 +1,28 @@
+load("@rules_rs//rs:rust_binary.bzl", "rust_binary")
+load("//varlink/toolchain:musl_binary.bzl", "musl_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "Cargo.toml",
+    "Cargo.lock",
+])
+
+rust_binary(
+    name = "varlink_rust_generator_bin",
+    srcs = ["main.rs"],
+    edition = "2021",
+    deps = [
+        "@generator_crates//:getopts",
+        "@generator_crates//:prettyplease",
+        "@generator_crates//:syn",
+        "@generator_crates//:varlink_generator",
+    ],
+)
+
+# Static musl binary — no glibc/libcxx dependency at exec time.
+# Avoids the libcxx.static link-order issue on NixOS LLVM toolchains.
+musl_binary(
+    name = "varlink_rust_generator",
+    binary = ":varlink_rust_generator_bin",
+)

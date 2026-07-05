@@ -1,0 +1,25 @@
+exports_files([
+    "Cargo.toml",
+    "Cargo.lock",
+])
+
+# Re-export runtime crates so consumers don't need @varlink_crates visible in
+# their own module — they reference @rules_varlink//varlink/runtime/rust:<name>.
+alias(
+    name = "varlink",
+    actual = "@varlink_crates//:varlink",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "serde",
+    actual = "@varlink_crates//:serde",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "serde_json",
+    actual = "@varlink_crates//:serde_json",
+    visibility = ["//visibility:public"],
+)
+
