@@ -1,5 +1,5 @@
-# Releases a hash-stable source archive on v* tags; the Publish to BCR app
-# turns the release into a registry PR (see .bcr/).
+# Releases a hash-stable source archive on v* tags, then opens the BCR
+# registry PR via the publish-to-bcr reusable workflow (see .bcr/).
 name: Release
 
 on:
@@ -38,3 +38,17 @@ jobs:
             --title "${GITHUB_REF_NAME}" \
             --notes-file notes.md \
             "rules_varlink-${GITHUB_REF_NAME}.tar.gz"
+
+  # Chained here because the release is created with github.token, whose
+  # events never trigger other workflows.
+  publish-to-bcr:
+    needs: release
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.4.2
+    with:
+      tag_name: ${{ github.ref_name }}
+      registry_fork: Patagia/bazel-central-registry
+      attest: false
+      draft: false
+      download_default_release_artifacts: false
+    secrets:
+      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}

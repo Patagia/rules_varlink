@@ -1,0 +1,22 @@
+# Manual BCR publish for an existing release (e.g. re-runs or backfills).
+name: Publish to BCR
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag to publish (e.g. v0.0.1)"
+        required: true
+        type: string
+
+jobs:
+  publish:
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.4.2
+    with:
+      tag_name: ${{ inputs.tag_name }}
+      registry_fork: Patagia/bazel-central-registry
+      attest: false
+      draft: false
+      download_default_release_artifacts: false
+    secrets:
+      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
