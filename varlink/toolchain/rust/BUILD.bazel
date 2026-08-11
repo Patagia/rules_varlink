@@ -13,10 +13,10 @@ rust_binary(
     srcs = ["main.rs"],
     edition = "2021",
     deps = [
-        "@generator_crates//:getopts",
-        "@generator_crates//:prettyplease",
-        "@generator_crates//:syn",
-        "@generator_crates//:varlink_generator",
+        "@varlink_generator_crates//:getopts",
+        "@varlink_generator_crates//:prettyplease",
+        "@varlink_generator_crates//:syn",
+        "@varlink_generator_crates//:varlink_generator",
     ],
 )
 
