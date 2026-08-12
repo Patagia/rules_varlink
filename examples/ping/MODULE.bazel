@@ -3,7 +3,7 @@ module(
     version = "0.0.0",
 )
 
-bazel_dep(name = "rules_varlink", version = "0.0.1")
+bazel_dep(name = "rules_varlink", version = "0.0.2")
 local_path_override(
     module_name = "rules_varlink",
     path = "../..",
