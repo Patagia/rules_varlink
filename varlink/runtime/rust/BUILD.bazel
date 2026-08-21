@@ -23,3 +23,8 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "serde_derive",
+    actual = "@varlink_crates//:serde_derive",
+    visibility = ["//visibility:public"],
+)
